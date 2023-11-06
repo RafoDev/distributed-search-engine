@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from porterStemmer import PorterStemmer
+from .porterStemmer import PorterStemmer
 
 client = MongoClient('localhost', 27017)
 db = client['search_engine_db']
