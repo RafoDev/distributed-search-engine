@@ -1,20 +1,21 @@
 import json
 import boto3
 from pymongo import MongoClient
-from config import bucket_name
+from config import bucket_name, db
 
 s3 = boto3.resource('s3')
 
-client = MongoClient('localhost', 27017)  
-db = client['search_engine_db']
 collection_ii = db['inverted_index']
 collection_pr = db['page_rank']
+
 
 def parse_line_to_document_ii(line):
     word, postings = line.split('\t', 1)
     postings_data = postings.split(',')
-    postings_list = [{"file": posting.split(':')[0], "count": int(posting.split(':')[1])} for posting in postings_data]
+    postings_list = [{"file": posting.split(':')[0], "count": int(
+        posting.split(':')[1])} for posting in postings_data]
     return {"word": word, "postings": postings_list}
+
 
 def parse_line_to_document_pr(line):
     parts = line.split('\t')
@@ -22,6 +23,7 @@ def parse_line_to_document_pr(line):
         return None
     filename, rank = parts
     return {"filename": filename, "rank": float(rank)}
+
 
 obj_ii = s3.Object(bucket_name, 'inverted-index/result/part-00000')
 with obj_ii.get()['Body'] as file:
