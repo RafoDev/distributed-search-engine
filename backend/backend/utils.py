@@ -10,7 +10,10 @@ collection_pr = db['page_rank']
 def get_docs_by_word(word):
     document = collection_ii.find_one({"word": word})
     if document:
-        return document['postings']
+        docs = []
+        for post in document['postings']:
+            docs.append(post["file"])
+        return docs
     else:
         return None
 
