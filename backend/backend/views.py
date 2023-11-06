@@ -23,6 +23,7 @@ def search(request):
 
     words = request.data.get("words", "").lower().split()
     response = search_query(words)
+    print("query: ", response)
     pagelist = []
 
     if not len(response):
@@ -31,6 +32,7 @@ def search(request):
     else:
         for lista in response:
             for page in lista[0]:
+                print("pagerank: ", page_rank)
                 if page in page_rank:
                     page_rank[page][1] += ' '+lista[1]
                 else:
