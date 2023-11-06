@@ -8,14 +8,14 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
         -mapper "python mapper.py" \
         -file reducer.py  \
         -reducer "python reducer.py" \
-        -input s3://$bucket_name/corpus/txt \
+        -input s3://$bucket_name/corpus/txt/ \
         -output s3://$bucket_name/inverted-index/output
 
 
 echo "[ Generating Results ]"
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
         -Dmapred.reduce.tasks=1 \
-        -input s3://$bucket_name/inverted-index/output \
+        -input s3://$bucket_name/inverted-index/output/ \
         -output s3://$bucket_name/inverted-index/result \
         -mapper cat \
         -reducer cat
