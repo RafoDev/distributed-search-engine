@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django import views 
+from backend.views import search, hello 
 
 
 urlpatterns = [
-    path('search', views.search, name='search'),
+    path('search', search, name='search'),
+    path('', hello, name='hello'),
 ]

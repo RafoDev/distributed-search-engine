@@ -1,7 +1,11 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from models import InvertedIndex
+from backend.models import InvertedIndex
 from pymongo import MongoClient
+
+@api_view(['GET'])
+def hello(request):
+    return JsonResponse({'message': 'Hola'})
 
 @api_view(["POST"])
 def search(request):
