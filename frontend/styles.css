@@ -1,0 +1,39 @@
+.body{
+    font-family: 'Lato', sans-serif;
+    margin:0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    gap: 2rem;
+}
+
+.title{
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.subtitle{
+    font-size: 1rem;
+    text-align: right;
+    margin: 0;
+    line-height: 0;
+    font-weight: 300;
+}
+
+.main__input{
+    padding: 0.5rem 0.5rem;
+    border-radius: 10px;
+    outline: 0;
+    border: 1px solid #3333333a;
+}
+.main__button{
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    outline: 0;
+    border: 0;
+    background-color: #4442c5;
+    color: #fff;
+    margin-bottom: 5rem;
+}
