@@ -1,7 +1,7 @@
 import boto3
+from config import bucket_name
 
 s3_client = boto3.client('s3')
-bucket_name = 'search-engine-bd'
 
 s3_client.put_object(Bucket=bucket_name, Key='data/')
 

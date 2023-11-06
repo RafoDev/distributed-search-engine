@@ -11,6 +11,7 @@ from typing import Generator, Union, List, Tuple
 import urllib3
 urllib3.disable_warnings()
 
+from config import bucket_name
 
 def get_paper(session: Session, paper_id: str, fields: str = 'paperId,title', **kwargs) -> dict:
     params = {
@@ -46,7 +47,7 @@ def download_pdf(session: Session, url: str, path: str, user_agent: str = 'reque
         
         pdf_data.seek(0)
 
-        s3_client.upload_fileobj(pdf_data, 'search-engine-bd', path)
+        s3_client.upload_fileobj(pdf_data, bucket_name, path)
 
         pdf_data.close()
 

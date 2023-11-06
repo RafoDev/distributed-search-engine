@@ -4,12 +4,14 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 from io import BytesIO
 
+from config import bucket_name
+
 s3_client = boto3.client('s3')
 corpus_filename = "data/corpus.json"
 pagerank_filename = "page-rank/pagerank.txt"
 
 corpus_object = s3_client.get_object(
-    Bucket='search-engine-bd', Key=corpus_filename)
+    Bucket=bucket_name, Key=corpus_filename)
 corpus_data = corpus_object['Body'].read().decode('utf-8')
 corpus = json.loads(corpus_data)
 
@@ -35,6 +37,6 @@ lines_bytes = lines.encode('utf-8')
 
 lines_buffer = BytesIO(lines_bytes)
 
-s3_client.upload_fileobj(lines_buffer, 'search-engine-bd', pagerank_filename)
+s3_client.upload_fileobj(lines_buffer, bucket_name, pagerank_filename)
 
 lines_buffer.close()

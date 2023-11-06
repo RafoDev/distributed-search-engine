@@ -6,6 +6,8 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 from io import BytesIO
 
+from config import bucket_name
+
 max_depth = 1
 max_references = 3
 
@@ -102,7 +104,7 @@ def tree_to_json(paper):
 
     json_buffer = BytesIO(json_data_bytes)
 
-    s3_client.upload_fileobj(json_buffer,'search-engine-bd', 'data/corpus.json')
+    s3_client.upload_fileobj(json_buffer,bucket_name, 'data/corpus.json')
 
     json_buffer.close()
 
@@ -117,7 +119,7 @@ def download_papers():
     for paper in papers:
         content = ""
         
-        pdf_object = s3_client.get_object(Bucket='search-engine-bd',Key=f"corpus/pdf/{paper}.pdf")
+        pdf_object = s3_client.get_object(Bucket=bucket_name,Key=f"corpus/pdf/{paper}.pdf")
         pdf_data = BytesIO(pdf_object['Body'].read())
 
         pdf_reader = PyPDF2.PdfReader(pdf_data)
@@ -127,7 +129,7 @@ def download_papers():
             content += page_text
 
         text_data = BytesIO(content.encode('utf-8'))
-        s3_client.upload_fileobj(text_data, 'search-engine-bd', f'corpus/txt/{paper}.txt'.format(paper))
+        s3_client.upload_fileobj(text_data, bucket_name, f'corpus/txt/{paper}.txt'.format(paper))
 
         pdf_data.close()
         text_data.close()
