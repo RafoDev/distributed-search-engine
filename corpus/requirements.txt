@@ -1,0 +1,5 @@
+requests
+argparse
+PyPDF2
+boto3
+urllib3<2.0
