@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import boto3
 from config import bucket_name
 
