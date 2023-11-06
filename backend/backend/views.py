@@ -36,8 +36,12 @@ def search(request):
                 if page in page_rank:
                     page_rank[page][1] += ' '+lista[1]
                 else:
-                    page_rank[page] = [get_rank_by_doc(page), lista[1]]
-
+                    curr_rank = get_rank_by_doc(page)
+                    if(curr_rank != None):
+                        page_rank[page] = [get_rank_by_doc(page), lista[1]]
+                    else:
+                        page_rank[page] = [0, lista[1]]
+                        
     page_rank = {k: v for k, v in sorted(
         page_rank.items(), reverse=True, key=lambda item: item[1][0])}
 
