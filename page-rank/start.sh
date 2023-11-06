@@ -1,5 +1,11 @@
 bucket_name="search-engine-bd"
 
+
+chmod +x pagerank_mapper.py
+chmod +x pagerank_reducer.py
+chmod +x rank_map.py
+
+
 echo "[ Computing pagerank ]"
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
         -file pagerank_mapper.py \

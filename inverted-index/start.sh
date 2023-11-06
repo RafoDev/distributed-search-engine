@@ -1,5 +1,8 @@
 bucket_name="search-engine-bd"
 
+chmod +x mapper.py
+chmod +x reducer.py
+
 echo echo "[ Computing Inverted Index ]"
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
         -file mapper.py \
