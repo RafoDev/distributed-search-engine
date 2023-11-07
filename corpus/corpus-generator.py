@@ -13,6 +13,7 @@ max_depth = 1
 max_references = 3
 
 papers = []
+metadata = ""
 
 
 class Paper:
@@ -34,6 +35,8 @@ class Paper:
         self.referenced_papers.append(paper)
 
     def download_paper_pdf(self, pid):
+        global metadata
+        
         s3_client = boto3.client('s3')
         params = {
             'fields': 'title,authors,abstract,paperId,isOpenAccess,openAccessPdf'
@@ -66,6 +69,11 @@ class Paper:
                 paper_url, headers=headers, stream=True)
 
             if response.status_code == 200:
+
+                metadata += pid + "\t" + \
+                    paper["title"]+"\n"+paper["authors"] + \
+                    "\t"+paper["abstract"]+"\n"
+
                 pdf_data = BytesIO()
                 if response.headers['content-type'] != 'application/pdf':
                     return True
@@ -74,6 +82,7 @@ class Paper:
                 pdf_data.seek(0)
                 s3_client.upload_fileobj(pdf_data, bucket_name, path)
                 pdf_data.close()
+
             else:
                 return True
 
