@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(dataToSend),
     };
 
-    fetch("http://204.236.220.115:8000/search", requestOptions)
+    fetch("http://34.228.57.23:8000/search", requestOptions)
       .then((response) => response.json())
       .then((data) => displayResults(data))
       .catch((error) => console.error("Error:", error));
