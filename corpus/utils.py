@@ -17,6 +17,6 @@ def graph_to_json(graph, filename):
 
 def json_to_graph(filename):
     result = s3_client.get_object(Bucket=bucket_name, Key=filename)
-    data = json.loads(result["body"].read().decode())
+    data = json.loads(result["Body"].read().decode())
     graph = nx.json_graph.node_link_graph(data)
     return graph

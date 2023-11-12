@@ -6,6 +6,7 @@ from utils import *
 
 max_depth = 0
 
+
 def custom_key(x):
     citing_paper = x.get("citingPaper")
     if isinstance(citing_paper, dict):
@@ -50,6 +51,7 @@ def generate_graph(papers):
             graph.add_edge(pid, citation)
     return graph
 
+
 def generate_final_graph():
 
     dir = "json/"
@@ -60,11 +62,12 @@ def generate_final_graph():
 
     if "Contents" in response:
         for graph in response["Contents"]:
-            key = graph["key"]
-            partial = json_to_graph(bucket_name,key)
-            final_graph = nx.compose(final_graph,partial)
+            key = graph["Key"]
+            partial = json_to_graph(key)
+            final_graph = nx.compose(final_graph, partial)
 
         graph_to_json(final_graph, "json/final_graph")
+
 
 def get_papers(pid):
     papers = {}
@@ -72,6 +75,7 @@ def get_papers(pid):
     papers[pid] = citations
     traverse_references(citations, papers)
     return papers
+
 
 def final_graph_was_generated():
     try:
@@ -86,11 +90,11 @@ if __name__ == "__main__":
     if not final_graph_was_generated():
         topics = [
             {"topic": "ia", "pids": ["204e3073870fae3d05bcbc2f6a8e263d9b72e776",
-                                    "2c03df8b48bf3fa39054345bafabfeff15bfd11d",
-                                    "abd1c342495432171beb7ca8fd9551ef13cbd0ff"]},
+                                     "2c03df8b48bf3fa39054345bafabfeff15bfd11d",
+                                     "abd1c342495432171beb7ca8fd9551ef13cbd0ff"]},
             {"topic": "bd", "pids": ["627be67feb084f1266cfc36e5aed3c3e7e6ce5f0",
-                                    "92936ad88a5412bc48b86900da94b08fb7a3eefb",
-                                    "e5616898a40b7c7356f7ea6bf49d16227b07abfe"]}
+                                     "92936ad88a5412bc48b86900da94b08fb7a3eefb",
+                                     "e5616898a40b7c7356f7ea6bf49d16227b07abfe"]}
         ]
 
         for topic in topics:
@@ -98,14 +102,14 @@ if __name__ == "__main__":
                 filename = topic["topic"] + "_" + pid
 
                 print("*** " + filename + " ***")
-                
+
                 papers = get_papers(pid)
                 print("- Papers from SS")
-                
+
                 graph = generate_graph(papers)
                 print("- Graph")
-                
+
                 graph_to_json(graph, "json/"+filename)
                 print("- json")
-        
+
         generate_final_graph()

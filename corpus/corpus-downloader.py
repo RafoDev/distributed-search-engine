@@ -2,7 +2,7 @@
 
 from utils import *
 import PyPDF2
-import config
+from config import *
 import io
 from reportlab.pdfgen import canvas
 import warnings
