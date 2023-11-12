@@ -4,7 +4,6 @@ from utils import *
 import PyPDF2
 from config import *
 import io
-from reportlab.pdfgen import canvas
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -86,7 +85,6 @@ if __name__ == "__main__":
                         url, headers=headers, verify=False, timeout=5)
 
                     if response:
-                        print(response.headers)
                         if response.headers["content-type"] != "application/pdf":
                             store_pdf(pid, response.content)
                             print("- pdf stored")
