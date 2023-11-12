@@ -7,8 +7,7 @@ import json
 import boto3
 from config import *
 
-s3_client = boto3.client(3)
-
+s3_client = boto3.client('s3')
 
 def graph_to_json(graph, filename):
     data = nx.json_graph.node_link_data(graph)

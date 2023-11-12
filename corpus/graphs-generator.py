@@ -73,12 +73,17 @@ def get_papers(pid):
     traverse_references(citations, papers)
     return papers
 
+def final_graph_was_generated():
+    try:
+        s3_client.head_object(Bucket=bucket_name, Key="json/final_graph.json")
+        return True
+    except:
+        return False
+
 
 if __name__ == "__main__":
 
-    final_graph_generated = s3_client.head_object(Bucket=bucket_name, Key="json/final_graph.json")
-
-    if not final_graph_generated:
+    if not final_graph_was_generated():
         topics = [
             {"topic": "ia", "pids": ["204e3073870fae3d05bcbc2f6a8e263d9b72e776",
                                     "2c03df8b48bf3fa39054345bafabfeff15bfd11d",
