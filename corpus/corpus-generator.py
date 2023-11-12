@@ -36,7 +36,7 @@ class Paper:
 
     def download_paper_pdf(self, pid):
         global metadata
-        
+
         s3_client = boto3.client('s3')
         params = {
             'fields': 'title,authors,abstract,paperId,isOpenAccess,openAccessPdf'
@@ -150,6 +150,15 @@ def tree_to_json(paper):
     s3_client.upload_fileobj(json_buffer, bucket_name, 'data/corpus.json')
 
     json_buffer.close()
+
+def write_metadata():
+    s3_client = boto3.client('s3')
+    metadata_filename = "metadata/metadata.txt"
+    lines_bytes = metadata.encode('utf-8')
+    lines_buffer = BytesIO(lines_bytes)
+    s3_client.upload_fileobj(lines_buffer, bucket_name, metadata_filename)
+
+    lines_buffer.close()
 
 
 def papers_to_txt():

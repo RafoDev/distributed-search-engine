@@ -8,3 +8,7 @@ django
 djongo
 djangorestframework
 django-cors-headers
+networkx
+matplotlib
+scipy
+

@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend.views import search, hello 
+from backend.views import search, hello, get_document_query 
 
 
 urlpatterns = [
     path('search', search, name='search'),
     path('', hello, name='hello'),
+    path('doc/<string:pid>',)
 ]

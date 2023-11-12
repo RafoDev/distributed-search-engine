@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from pymongo import MongoClient
 from .utils import search_query, get_rank_by_doc
+import boto3
 
 
 @api_view(['GET'])
@@ -52,3 +53,14 @@ def search(request):
         pagelist = [[key, temp_dic[key]] for key in temp_dic]
 
     return Response(pagelist)
+
+@api_view(["GET"])
+def get_document_query(request, pid):
+
+    s3 = boto3.client('s3')
+
+    uri_s3 = "s3://search-engine-bd/corpus/txt/" + pid
+    document = s3.download_file(uri_s3)
+    # convert to string
+    document = document.decode("utf-8")
+    return Response({"document": document})
