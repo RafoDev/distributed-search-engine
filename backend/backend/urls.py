@@ -22,5 +22,4 @@ from backend.views import search, hello, get_document_query
 urlpatterns = [
     path('search', search, name='search'),
     path('', hello, name='hello'),
-    path('doc/<string:pid>',)
 ]

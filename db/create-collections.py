@@ -60,3 +60,5 @@ with obj_pr.get()['Body'] as file:
         document = parse_line_to_document_metadata(line)
         if document:
             collection_meta.insert_one(document)
+
+collection_ii.create_index([("word", "text")])

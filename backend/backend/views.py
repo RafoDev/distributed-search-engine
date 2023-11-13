@@ -33,7 +33,6 @@ def search(request):
     else:
         for lista in response:
             for page in lista[0]:
-                print("pagerank: ", page_rank)
                 if page in page_rank:
                     page_rank[page][1] += ' '+lista[1]
                 else:
@@ -48,10 +47,12 @@ def search(request):
 
     pagelist = [[key, page_rank[key]] for key in page_rank]
 
+    print("pagelist:", pagelist)
+
     results = []
 
     for page in pagelist:
-        pid = page["filename"].split(".")[0]
+        pid = page[0].split(".")[0]
         doc = get_document_by_pid(pid)
         results.append(doc)
 
