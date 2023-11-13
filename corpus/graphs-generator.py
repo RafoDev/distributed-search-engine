@@ -29,7 +29,8 @@ def get_citations(pid):
         citations = []
         for citing_paper in tmp_citations:
             curr_pid = citing_paper["citingPaper"]["paperId"]
-            citations.append(curr_pid)
+            if curr_pid:
+                citations.append(curr_pid)
         return citations
     else:
         return []

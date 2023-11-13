@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 import json
 import boto3
 from config import *
+import nltk
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
+
 import re
 
 s3_client = boto3.client('s3')
