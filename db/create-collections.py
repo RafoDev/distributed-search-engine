@@ -9,7 +9,6 @@ collection_ii = db['inverted_index']
 collection_pr = db['page_rank']
 collection_meta = db['metadata']
 
-
 def parse_line_to_document_ii(line):
     word, postings = line.split('\t', 1)
     postings_data = postings.split(',')
@@ -26,14 +25,17 @@ def parse_line_to_document_pr(line):
     return {"filename": filename, "rank": float(rank)}
 
 def parse_line_to_document_metadata(line):
-    pid, title, authors, abstract = line.strip().split('\t')
-    authors_list = authors.split(', ')
+    pid, title, authors, year, citationCount, pdf_url, abstract = line.strip().split('\t')
     return {
-        "pid": pid,
-        "title": title,
-        "authors": authors_list,
-        "abstract": abstract
-    }
+        'pid': pid,
+        'title': title,
+        'authors': authors.split(','), 
+        'year': int(year),
+        'citationCount': int(citationCount),
+        'pdf_url': pdf_url,
+        'abstract': abstract
+}
+
 
 obj_ii = s3.Object(bucket_name, 'inverted-index/result/part-00000')
 with obj_ii.get()['Body'] as file:
@@ -51,7 +53,7 @@ with obj_pr.get()['Body'] as file:
         if document:
             collection_pr.insert_one(document)
 
-obj_pr = s3.Object(bucket_name, 'metadata/metadata.txt')
+obj_pr = s3.Object(bucket_name, 'metadata/meta.txt')
 with obj_pr.get()['Body'] as file:
     for line in file:
         line = line.decode('utf-8')

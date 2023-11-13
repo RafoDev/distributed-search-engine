@@ -1,11 +1,14 @@
 from pymongo import MongoClient
 from .porterStemmer import PorterStemmer
+from django.http import JsonResponse
+from bson.json_util import dumps
 
 client = MongoClient('localhost', 27017)
 db = client['search_engine_db']
 
 collection_ii = db['inverted_index']
 collection_pr = db['page_rank']
+collection_meta = db['metadata']
 
 def get_docs_by_word(word):
     document = collection_ii.find_one({"word": word})
@@ -16,6 +19,10 @@ def get_docs_by_word(word):
         return docs
     else:
         return None
+
+def get_document_by_pid(pid):
+    document = collection_meta.find_one({'pid': pid})
+    return document 
 
 def get_rank_by_doc(filename):
     document = collection_pr.find_one({"filename": filename})

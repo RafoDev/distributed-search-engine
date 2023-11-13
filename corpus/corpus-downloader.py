@@ -84,7 +84,7 @@ if __name__ == "__main__":
                         'user-agent': 'requests/2.0.0'
                     }
                     response = requests.get(
-                        url, headers=headers, verify=False, timeout=5)
+                        url, headers=headers, verify=False)
 
                     if response:
                         if response.headers["content-type"] != "application/pdf":

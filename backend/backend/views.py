@@ -5,7 +5,7 @@ from backend.models import InvertedIndex
 from django.views.decorators.csrf import csrf_exempt
 
 from pymongo import MongoClient
-from .utils import search_query, get_rank_by_doc
+from .utils import search_query, get_rank_by_doc, get_document_by_pid
 import boto3
 
 
@@ -46,13 +46,18 @@ def search(request):
     page_rank = {k: v for k, v in sorted(
         page_rank.items(), reverse=True, key=lambda item: item[1][0])}
 
-    if len(page_rank) <= 10:
-        pagelist = [[key, page_rank[key]] for key in page_rank]
-    else:
-        temp_dic = dict(list(page_rank.items())[:10])
-        pagelist = [[key, temp_dic[key]] for key in temp_dic]
+    pagelist = [[key, page_rank[key]] for key in page_rank]
 
-    return Response(pagelist)
+    results = []
+
+    for page in pagelist:
+        pid = page["filename"].split(".")[0]
+        doc = get_document_by_pid(pid)
+        results.append(doc)
+
+    print(results)
+
+    return Response(results)
 
 @api_view(["GET"])
 def get_document_query(request, pid):
