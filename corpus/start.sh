@@ -10,7 +10,8 @@ chmod +x clean.py prepare-dirs.py graphs-generator.py corpus-downloader.py pager
 # script to get pids and download files 
 ./graphs-generator.py
 
-# script to generate the pagerank graph
-./pagerank-graph-generato.py
 
 ./corpus-downloader.py
+
+# script to generate the pagerank graph
+./pagerank-graph-generato.py

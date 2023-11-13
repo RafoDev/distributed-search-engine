@@ -48,6 +48,7 @@ def traverse_references(citations, papers, curr_depth=0):
 def generate_graph(papers):
     graph = nx.Graph()
     for pid, citations in papers.items():
+        graph.add_node(pid)
         for citation in citations:
             graph.add_edge(pid, citation)
     return graph
