@@ -24,7 +24,6 @@ def search(request):
 
     words = request.data.get("words", "").lower().split()
     response = search_query(words)
-    print("query: ", response)
     pagelist = []
 
     if not len(response):
@@ -47,7 +46,6 @@ def search(request):
 
     pagelist = [[key, page_rank[key]] for key in page_rank]
 
-    print("pagelist:", pagelist)
 
     results = []
 
@@ -55,8 +53,6 @@ def search(request):
         pid = page[0].split(".")[0]
         doc = get_document_by_pid(pid)
         results.append(doc)
-
-    print(results)
 
     return Response(results)
 

@@ -19,7 +19,6 @@ def preproccess(data):
 
     prepro_words = [stemmer.stem(word) for word in data if word not in stop_words]
     prepro_data.append(' '.join(prepro_words))
-    print(''.join(prepro_data))
     return ''.join(prepro_data)
 
 
