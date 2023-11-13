@@ -31,27 +31,27 @@ collection_pr = db['page_rank']
 collection_meta = db['metadata']
 
 
-# def get_docs_by_word(word):
-#     document = collection_ii.find_one({"word": word})
-#     if document:
-#         docs = []
-#         for post in document['postings']:
-#             docs.append(post["file"])
-#         return docs
-#     else:
-#         return None
-
 def get_docs_by_word(word):
+    document = collection_ii.find_one({"word": word})
+    if document:
+        docs = []
+        for post in document['postings']:
+            docs.append(post["file"])
+        return docs
+    else:
+        return None
 
-    query = {"$text": {"$search": word}}
-    documents = collection_ii.find(query)
+# def get_docs_by_word(word):
 
-    docs = []
-    for document in documents:
-        for post in document.get('postings', []):
-            docs.append(post.get("file"))
+#     query = {"$text": {"$search": word}}
+#     documents = collection_ii.find(query)
 
-    return docs if docs else None
+#     docs = []
+#     for document in documents:
+#         for post in document.get('postings', []):
+#             docs.append(post.get("file"))
+
+#     return docs if docs else None
 
 def get_document_by_pid(pid):
     document = collection_meta.find_one({'pid': pid})
