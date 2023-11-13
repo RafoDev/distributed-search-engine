@@ -30,8 +30,8 @@ def parse_line_to_document_metadata(line):
         'pid': pid,
         'title': title,
         'authors': authors.split(','), 
-        'year': int(year),
-        'citationCount': int(citationCount),
+        'year': year,
+        'citationCount': citationCount,
         'pdf_url': pdf_url,
         'abstract': abstract
 }
@@ -59,4 +59,4 @@ with obj_pr.get()['Body'] as file:
         line = line.decode('utf-8')
         document = parse_line_to_document_metadata(line)
         if document:
-            collection_pr.insert_one(document)
+            collection_meta.insert_one(document)
