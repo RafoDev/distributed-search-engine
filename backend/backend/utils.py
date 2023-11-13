@@ -1,7 +1,5 @@
 from pymongo import MongoClient
 from .porterStemmer import PorterStemmer
-from django.http import JsonResponse
-from bson.json_util import dumps
 import nltk
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
@@ -16,17 +14,13 @@ def preproccess(data):
     stemmer  = PorterStemmer()
     stop_words = set(stopwords.words('english'))
 
-    lines = data.split('\n')
     prepro_data = []
+    
+    data = data.lower()
+    words = word_tokenize(data)
 
-    for line in lines:
-        
-        line = line.lower()
-        line = re.sub(r'\W+', ' ', line)
-        words = word_tokenize(line)
-
-        prepro_words = [stemmer.stem(word) for word in words if word not in stop_words]
-        prepro_data.append(' '.join(prepro_words))
+    prepro_words = [stemmer.stem(word) for word in words if word not in stop_words]
+    prepro_data.append(' '.join(prepro_words))
 
     return ''.join(prepro_data)
 
