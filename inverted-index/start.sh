@@ -8,7 +8,7 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
         -mapper "./mapper.py" \
         -file reducer.py  \
         -reducer "./reducer.py" \
-        -input s3://$bucket_name/corpus/txt/, s3://$bucket_name/metadata/\
+        -input s3://$bucket_name/corpus/txt/ \
         -output s3://$bucket_name/inverted-index/output
 
 

@@ -11,4 +11,4 @@ django-cors-headers
 networkx
 matplotlib
 scipy
-
+nltk

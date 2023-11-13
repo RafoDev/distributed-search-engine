@@ -24,8 +24,9 @@ def store_bytes_in_txt(pid, content):
             text = ''
             for page in reader.pages:
                 text += page.extract_text() + '\n'
-
-            s3_client.put_object(Bucket=bucket_name, Key=filename, Body=text)
+            
+            stemmed_text = preproccess(text)
+            s3_client.put_object(Bucket=bucket_name, Key=filename, Body=stemmed_text)
         return True
     except:
         return False
@@ -33,8 +34,8 @@ def store_bytes_in_txt(pid, content):
 
 def store_string_in_txt(pid, string):
     filename = "corpus/txt/"+pid + ".txt"
-
-    s3_client.put_object(Bucket=bucket_name, Key=filename, Body=string)
+    stemmed_string = preproccess(string)
+    s3_client.put_object(Bucket=bucket_name, Key=filename, Body=stemmed_string)
 
     return filename
 
@@ -73,7 +74,6 @@ if __name__ == "__main__":
                 year = "None" if not paper["year"] else paper["year"]
                 citationCount = "None" if not paper["citationCount"] else paper["citationCount"]
                 abstract = "None" if not paper["abstract"] else paper["abstract"]
-                abstract = abstract.replace('\n', '')
                 pdf_url = "None"
 
                 if paper["openAccessPdf"] and paper["openAccessPdf"]["url"]:
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
                 metadata += str(pid) + "\t" + title + "\t" + authors + "\t" + str(year) + \
                     "\t" + str(citationCount) + "\t" + \
-                    pdf_url + "\t" + abstract + "\n"
+                    pdf_url + "\t" + abstract.replace('\n', '') + "\n"
 
                 j += 1
 
