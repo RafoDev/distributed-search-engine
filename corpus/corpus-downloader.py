@@ -76,6 +76,8 @@ if __name__ == "__main__":
                 abstract = "None" if not paper["abstract"] else paper["abstract"]
                 pdf_url = "None"
 
+                content_if_not_pdf = str(pid) + "\n" + title + "\n" + authors + "\n" + str(year) + "\n" + abstract 
+
                 if paper["openAccessPdf"] and paper["openAccessPdf"]["url"]:
                     url = paper["openAccessPdf"]["url"]
                     headers = {
@@ -92,18 +94,18 @@ if __name__ == "__main__":
                             valid_pdf = store_bytes_in_txt(
                                 pid, response.content)
                             if not valid_pdf:
-                                store_string_in_txt(pid, abstract)
+                                store_string_in_txt(pid, content_if_not_pdf)
                                 pdf_url = "None"
                                 print("- abstract stored")
                         else:
-                            store_string_in_txt(pid, abstract)
+                            store_string_in_txt(pid, content_if_not_pdf)
                             print("- abstract stored")
 
                     else:
-                        store_string_in_txt(pid, abstract)
+                        store_string_in_txt(pid, content_if_not_pdf)
                         print("- abstract stored")
                 else:
-                    store_string_in_txt(pid, abstract)
+                    store_string_in_txt(pid, content_if_not_pdf)
                     print("- abstract stored")
 
                 metadata += str(pid) + "\t" + title + "\t" + authors + "\t" + str(year) + \

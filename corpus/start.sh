@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# compatibility with aws 2
-#pip install "urllib3<2.0"
 
 chmod +x clean.py prepare-dirs.py graphs-generator.py corpus-downloader.py pagerank-graph-generator.py
 
