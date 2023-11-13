@@ -1,18 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("searchInput");
   const button = document.getElementById("button");
+  const resultsContainer = document.getElementById("results");
 
   const displayResults = (results) => {
-    const resultsContainer = document.getElementById("results");
-
-    resultsContainer.innerHTML = "";
+    resultsContainer.innerHTML += `<div class="results__counter">${results.length} resultados</div>`
 
     results.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = "<h3>" + item[0] + "</h3>" + "<p>" + item[1] + "</p>";
-      resultsContainer.appendChild(card);
+
+      let content = ""
+      content += `
+      <article class="card">
+            <div class="card__container">
+              <h3 class="card__title">${item["title"]}</h3>
+              <ul class="card__authors">`;
+      
+      const authors = item["authors"];
+      console.log(authors)
+      authors.pop()
+
+      authors.forEach(author => 
+        {content += `<li class="card__author">${author}</li>`}
+      );
+
+      content += `
+            </ul>
+              <p class="card__abstract">${item["abstract"]}</p>
+            </div>
+      </article>`;
+
+      resultsContainer.innerHTML += content;
     });
+
+
   };
 
   const search = () => {
@@ -29,13 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(dataToSend),
     };
 
-    fetch("http://34.228.57.23:8000/search", requestOptions)
+    fetch("http://54.242.250.215:8000/search", requestOptions)
       .then((response) => response.json())
       .then((data) => displayResults(data))
       .catch((error) => console.error("Error:", error));
   };
   
   button.addEventListener("click", () => {
+    resultsContainer.innerHTML = ""
     search();
   });
 
